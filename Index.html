@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InfaTrack — Portafolio UI/UX</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B2E4B;
+    --blue: #2563EB;
+    --blue-light: #E8F0FB;
+    --cyan: #06B6D4;
+    --cyan-light: #CFFAFE;
+    --bg: #EEF3FB;
+    --white: #ffffff;
+    --border: #D1DCF0;
+    --text: #1B2E4B;
+    --muted: #617080;
+    --red: #EF4444;
+    --red-light: #FEE2E2;
+    --yellow: #EAB308;
+    --yellow-light: #FEF9C3;
+    --green: #16A34A;
+    --green-light: #DCFCE7;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 600; font-size: 17px; color: var(--navy);
+    text-decoration: none;
+  }
+  .nav-logo-dot {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 13px; font-weight: 600;
+    font-family: 'DM Mono', monospace;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    font-size: 14px; color: var(--muted); text-decoration: none;
+    font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blue); }
+
+  /* HERO */
+  .hero {
+    padding: 130px 48px 80px;
+    max-width: 960px; margin: 0 auto;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--blue-light); color: var(--blue);
+    border: 1px solid #BFCFF8;
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 52px; font-weight: 600; line-height: 1.15;
+    color: var(--navy); margin-bottom: 18px;
+  }
+  .hero h1 span { color: var(--blue); }
+  .hero p {
+    font-size: 18px; color: var(--muted); max-width: 600px;
+    margin: 0 auto 36px; line-height: 1.7;
+  }
+  .hero-meta {
+    font-size: 13px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    flex-wrap: wrap;
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+
+  /* SECTION */
+  section { padding: 72px 48px; }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 10px;
+    font-family: 'DM Mono', monospace;
+  }
+  .section-title {
+    font-size: 30px; font-weight: 600; color: var(--navy);
+    margin-bottom: 40px; line-height: 1.25;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+
+  /* OVERVIEW GRID */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-bottom: 32px;
+  }
+  .overview-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .overview-card .oc-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--muted); margin-bottom: 8px;
+    font-family: 'DM Mono', monospace;
+  }
+  .overview-card .oc-value {
+    font-size: 15px; font-weight: 500; color: var(--navy);
+  }
+
+  /* PHASES */
+  .phases { display: flex; flex-direction: column; gap: 20px; }
+  .phase {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    display: flex; align-items: flex-start; gap: 20px;
+  }
+  .phase-num {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    background: var(--blue-light);
+    border: 1.5px solid #BFCFF8;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; color: var(--blue);
+    font-family: 'DM Mono', monospace;
+  }
+  .phase-content h4 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 5px; }
+  .phase-content p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .phase-badge {
+    margin-left: auto; flex-shrink: 0;
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+  }
+  .badge-done { background: var(--green-light); color: var(--green); }
+  .badge-wip  { background: var(--yellow-light); color: var(--yellow); }
+
+  /* TECH STACK */
+  .stack-grid {
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .stack-tag {
+    background: var(--blue-light);
+    border: 1px solid #BFCFF8;
+    color: var(--blue);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 13px; font-weight: 500;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* SCREENS PREVIEW */
+  .screens-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  }
+  .screen-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .screen-preview {
+    height: 140px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .screen-mini {
+    width: 88%; height: 88%;
+    background: var(--white);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    display: flex;
+    overflow: hidden;
+  }
+  .mini-sidebar {
+    width: 28%; background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 6px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .mini-sb-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--border); margin: 4px auto; }
+  .mini-sb-item {
+    height: 10px; border-radius: 3px; background: var(--border);
+    opacity: 0.5;
+  }
+  .mini-sb-item.active { background: var(--blue-light); opacity: 1; }
+  .mini-content { flex: 1; padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .mini-topbar { height: 14px; background: var(--border); border-radius: 3px; opacity: 0.4; }
+  .mini-row { display: flex; gap: 3px; }
+  .mini-kpi { flex: 1; height: 20px; border-radius: 3px; background: var(--blue-light); }
+  .mini-chart { height: 50px; background: var(--blue-light); border-radius: 3px; opacity: 0.5; }
+  .mini-line { height: 8px; border-radius: 2px; background: var(--border); opacity: 0.4; }
+
+  /* Login mini */
+  .mini-login {
+    width: 88%; height: 88%;
+    background: var(--white);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    display: flex; overflow: hidden;
+  }
+  .mini-login-left { width: 50%; background: var(--navy); }
+  .mini-login-right { flex: 1; padding: 10px; display: flex; flex-direction: column; gap: 5px; align-items: center; justify-content: center; }
+  .mini-input { width: 80%; height: 10px; border-radius: 3px; background: var(--border); }
+  .mini-btn { width: 80%; height: 14px; border-radius: 4px; background: var(--navy); }
+
+  .screen-info { padding: 14px 16px; }
+  .screen-info h4 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
+  .screen-info p { font-size: 12px; color: var(--muted); }
+
+  /* CTA */
+  .cta-section {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+  }
+  .cta-section h2 { font-size: 26px; font-weight: 600; color: white; margin-bottom: 12px; }
+  .cta-section p { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 32px; }
+  .cta-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue); color: white;
+    padding: 12px 24px; border-radius: 10px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: white;
+    padding: 12px 24px; border-radius: 10px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3); cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s;
+  }
+  .btn-outline:hover { border-color: white; }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 0 48px; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    text-align: center;
+    font-size: 13px; color: var(--muted);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .hero { padding: 100px 20px 60px; }
+    .hero h1 { font-size: 34px; }
+    section { padding: 48px 20px; }
+    .overview-grid { grid-template-columns: 1fr; }
+    .screens-grid { grid-template-columns: 1fr; }
+    .cta-links { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-dot">IT</div>
+    InfaTrack
+  </a>
+  <div class="nav-links">
+    <a href="#overview">Proyecto</a>
+    <a href="#pantallas">Pantallas</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#enlaces">Entrega</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">✦ Proyecto UI/UX — 2025</div>
+  <h1>Clínico de monitoreo<br>y analítica del<br><span>estado del paciente</span></h1>
+  <p>Diseño de interfaz para una plataforma clínica de monitoreo de pacientes en tiempo real, desarrollada como proyecto universitario en la USB Medellín.</p>
+  <div class="hero-meta">
+    <span>Juan Esteban Murillo Gómez</span>
+    <div class="dot"></div>
+    <span>Universidad de San Buenaventura</span>
+    <div class="dot"></div>
+    <span>Medellín, 2025</span>
+  </div>
+</div>
+
+<hr>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-inner">
+    <div class="section-label">01 — Descripción del proyecto</div>
+    <div class="section-title">InfaTrack</div>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="oc-label">Tipo</div>
+        <div class="oc-value">Diseño UI/UX — Sistema clínico</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">Herramienta</div>
+        <div class="oc-value">Figma — Prototipo interactivo</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">Fidelidad</div>
+        <div class="oc-value">Alta fidelidad + animaciones</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">Curso</div>
+        <div class="oc-value">ProyectoUI/UX — USB Medellín</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">Integrante</div>
+        <div class="oc-value">Juan Esteban Murillo Gómez</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">Entrega</div>
+        <div class="oc-value">Abril 2025</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p style="font-size:15px; color:var(--muted); line-height:1.8;">
+        InfaTrack es una plataforma digital orientada al monitoreo continuo de pacientes en entornos clínicos de alta complejidad. El proyecto cubre desde la definición del sistema de diseño (Style Tile con paleta de colores, tipografía e íconos) hasta la construcción de pantallas de media y alta fidelidad con un prototipo navegable y animaciones de transición entre vistas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- FASES -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">02 — Proceso de diseño</div>
+    <div class="section-title">Fases del proyecto</div>
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div class="phase-content">
+          <h4>Style Tile y UI Kit</h4>
+          <p>Definición de paleta de colores, tipografía médica, colección de íconos, keywords del sistema y KPIs del producto.</p>
+        </div>
+        <div class="phase-badge badge-done">Entregado</div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div class="phase-content">
+          <h4>Sketches de baja fidelidad</h4>
+          <p>Bocetos iniciales del Dashboard Clínico, Login y flujos principales de navegación.</p>
+        </div>
+        <div class="phase-badge badge-done">Entregado</div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div class="phase-content">
+          <h4>Prototipo de media fidelidad</h4>
+          <p>Pantallas completas: Dashboard, Detalle del Paciente (Signos vitales, Órdenes, Balance, Perfil), Alertas y Traspaso.</p>
+        </div>
+        <div class="phase-badge badge-done">Entregado</div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div class="phase-content">
+          <h4>Prototipo de alta fidelidad + animaciones</h4>
+          <p>Versión final con colores reales, íconos definitivos, datos clínicos simulados y prototipo navegable con Smart Animate entre pantallas mediante la barra lateral.</p>
+        </div>
+        <div class="phase-badge badge-wip">En progreso</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- PANTALLAS -->
+<section id="pantallas">
+  <div class="section-inner">
+    <div class="section-label">03 — Pantallas diseñadas</div>
+    <div class="section-title">Vistas del sistema</div>
+    <div class="screens-grid">
+
+      <div class="screen-card">
+        <div class="screen-preview">
+          <div class="mini-login">
+            <div class="mini-login-left" style="display:flex;align-items:center;justify-content:center;">
+              <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);"></div>
+            </div>
+            <div class="mini-login-right">
+              <div class="mini-input"></div>
+              <div class="mini-input"></div>
+              <div class="mini-btn"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-info">
+          <h4>Login / Acceso</h4>
+          <p>Pantalla de autenticación del médico de turno</p>
+        </div>
+      </div>
+
+      <div class="screen-card">
+        <div class="screen-preview">
+          <div class="screen-mini">
+            <div class="mini-sidebar">
+              <div class="mini-sb-dot"></div>
+              <div class="mini-sb-item active"></div>
+              <div class="mini-sb-item"></div>
+              <div class="mini-sb-item"></div>
+              <div class="mini-sb-item"></div>
+            </div>
+            <div class="mini-content">
+              <div class="mini-topbar"></div>
+              <div class="mini-row">
+                <div class="mini-kpi"></div>
+                <div class="mini-kpi"></div>
+                <div class="mini-kpi"></div>
+              </div>
+              <div class="mini-chart"></div>
+              <div class="mini-line"></div>
+              <div class="mini-line" style="width:70%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-info">
+          <h4>Dashboard Clínico</h4>
+          <p>Vista general de KPIs, gráficas y pacientes activos</p>
+        </div>
+      </div>
+
+      <div class="screen-card">
+        <div class="screen-preview">
+          <div class="screen-mini">
+            <div class="mini-sidebar">
+              <div class="mini-sb-dot"></div>
+              <div class="mini-sb-item"></div>
+              <div class="mini-sb-item active"></div>
+              <div class="mini-sb-item"></div>
+              <div class="mini-sb-item"></div>
+            </div>
+            <div class="mini-content">
+              <div class="mini-topbar"></div>
+              <div style="height:28px;background:var(--border);border-radius:4px;opacity:0.4;margin:2px 0;"></div>
+              <div class="mini-row">
+                <div style="flex:1;height:14px;background:var(--navy);border-radius:3px;opacity:0.8;"></div>
+                <div style="flex:1;height:14px;background:var(--border);border-radius:3px;opacity:0.4;"></div>
+                <div style="flex:1;height:14px;background:var(--border);border-radius:3px;opacity:0.4;"></div>
+              </div>
+              <div class="mini-row">
+                <div style="flex:1;height:44px;background:#FEE2E2;border-radius:4px;"></div>
+                <div style="flex:1;height:44px;background:#CFFAFE;border-radius:4px;"></div>
+                <div style="flex:1;height:44px;background:#FEF9C3;border-radius:4px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-info">
+          <h4>Detalle del Paciente</h4>
+          <p>Signos vitales, órdenes, balance hídrido y perfil</p>
+        </div>
+      </div>
+
+      <div class="screen-card">
+        <div class="screen-preview">
+          <div class="screen-mini">
+            <div class="mini-sidebar">
+              <div class="mini-sb-dot"></div>
+              <div class="mini-sb-item"></div>
+              <div class="mini-sb-item"></div>
+              <div class="mini-sb-item active"></div>
+              <div class="mini-sb-item"></div>
+            </div>
+            <div class="mini-content">
+              <div class="mini-topbar"></div>
+              <div class="mini-row">
+                <div class="mini-kpi" style="background:#FEE2E2;"></div>
+                <div class="mini-kpi" style="background:#FEF9C3;"></div>
+                <div class="mini-kpi" style="background:#DCFCE7;"></div>
+              </div>
+              <div style="height:8px;background:#FEE2E2;border-radius:3px;opacity:0.8;margin:2px 0;"></div>
+              <div style="height:8px;background:#FEE2E2;border-radius:3px;opacity:0.6;margin:2px 0;"></div>
+              <div style="height:8px;background:#FEF9C3;border-radius:3px;opacity:0.7;margin:2px 0;"></div>
+              <div style="height:8px;background:#FEF9C3;border-radius:3px;opacity:0.5;margin:2px 0;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-info">
+          <h4>Gestión de Alertas</h4>
+          <p>Alertas críticas y moderadas con detalle y acciones</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- STACK -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">04 — Tecnologías y herramientas</div>
+    <div class="section-title">Stack de diseño</div>
+    <div class="stack-grid">
+      <span class="stack-tag">Figma</span>
+      <span class="stack-tag">Smart Animate</span>
+      <span class="stack-tag">Auto Layout</span>
+      <span class="stack-tag">Components</span>
+      <span class="stack-tag">Variants</span>
+      <span class="stack-tag">Prototype mode</span>
+      <span class="stack-tag">Style Tile</span>
+      <span class="stack-tag">Design Tokens</span>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="section-inner">
+    <div class="section-label">05 — Equipo</div>
+    <div class="section-title">Integrante</div>
+    <div class="card" style="display:flex;align-items:center;gap:20px;">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--blue-light);border:2px solid #BFCFF8;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:var(--blue);flex-shrink:0;">JM</div>
+      <div>
+        <div style="font-size:16px;font-weight:600;color:var(--navy);">Juan Esteban Murillo Gómez</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:3px;">Ingeniería de Datos y Software · Universidad de San Buenaventura · Medellín</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ENTREGA / CTA -->
+<section id="enlaces">
+  <div class="section-inner">
+    <div class="section-label">06 — Entrega</div>
+    <div class="section-title">Acceso al proyecto</div>
+    <div class="cta-section">
+      <h2>InfaTrack — Prototipo UI/UX</h2>
+      <p>Accede al archivo de Figma con permisos de edición y al prototipo navegable completo.</p>
+      <div class="cta-links">
+        <a href="https://www.figma.com/design/qY86tnJxWDnO85bPCy5GRT/Style-Tile-Clinico" target="_blank" class="btn-primary">
+          ✦ Abrir en Figma (editable)
+        </a>
+        <a href="https://www.figma.com/design/GmxcdA27wsCuUTuaXqL0Mt" target="_blank" class="btn-outline">
+          → Alta Fidelidad (en progreso)
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  InfaTrack · Juan Esteban Murillo Gómez · USB Medellín · 2025
+</footer>
+
+</body>
+</html>
